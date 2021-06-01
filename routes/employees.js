@@ -14,29 +14,31 @@ const {
 const router = express.Router();
 const debug = () => {console.log("here")};
 // GET => /employees
-router.get('/', empController.getAllEmployees);
+router.get('/', authorize,empController.getAllEmployees);
 
 // GET => /employees/id
-router.get('/:id', validate(idParamsSchema), empController.getEmployee);
+router.get('/:id', authorize,validate(idParamsSchema), empController.getEmployee);
 
 // POST => /employees
-router.post('/', validate(postEmployeeBodySchema), authorize, empController.postEmployee);
+router.post('/', authorize , validate(postEmployeeBodySchema), empController.postEmployee);
 
 // PUT => /employees/id
-router.put('/:id', validate(editEmployeeBodySchema), empController.editEmployee);
+router.put('/:id', authorize,validate(editEmployeeBodySchema), empController.editEmployee);
 
 // DELETE => /employees/id
-router.delete('/:id', empController.deleteEmployee);
+router.delete('/:id', authorize,empController.deleteEmployee);
 
 // GET => /employees/id/departments
-router.get('/:id/departments', empController.getEmployeeDepartments);
+router.get('/:id/departments', authorize,empController.getEmployeeDepartments);
 
 // POST => /employees/id/departments
-router.post('/:id/departments', validate(postEmployeeDepartmentBodySchema), empController.postEmployeeDepartment);
+router.post('/:id/departments', authorize,validate(postEmployeeDepartmentBodySchema), empController.postEmployeeDepartment);
 
 //routes for emproles
-router.get('/:id/roles', empController.getEmployeeRoles);
+router.get('/:id/roles', authorize,empController.getEmployeeRoles);
 
-router.post('/:id/roles',validate(postEmployeeRoleBodySchema), empController.postEmployeeRole);
+router.post('/:id/roles',authorize,validate(postEmployeeRoleBodySchema), empController.postEmployeeRole);
+
+router.delete('/:id/roles',authorize,validate(postEmployeeRoleBodySchema), empController.deleteEmployeeRole);
 
 module.exports = router;

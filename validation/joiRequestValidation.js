@@ -57,6 +57,7 @@ const editRoleBodySchema = {
 
 const postEmployeeRoleBodySchema = {
   body:joi.object().keys({
+    empId:joi.number().required(),
     roleId:joi.number().required()
   }).unknown(false)
 }

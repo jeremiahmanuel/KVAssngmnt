@@ -19,7 +19,7 @@ exports.getAddress = (req, resp, next) => {
 }
 
 exports.postAddress =(req, resp , next) => {
-  const city = req.body.name;
+  const city = req.body.city;
   const street = req.body.street;
   const pincode = req.body.pincode;
   const state = req.body.state;
@@ -29,8 +29,7 @@ exports.postAddress =(req, resp , next) => {
     street:street,
     pincode:pincode,
     state:state
-  })
-    .then(addr => {
+  }).then(addr => {
       resp.status(200).json({
         message:'Address created successfully',
         addr

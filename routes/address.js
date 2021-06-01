@@ -1,6 +1,7 @@
 const express = require('express');
 const validate = require('express-validation');
 const addrController = require('../controller/address');
+const {authorize} = require("../middleware/authorization.middlware");
 const {
   postAddressBodySchema,
   editAddressBodySchema
@@ -12,15 +13,15 @@ const router = express.Router();
 //router.get('/', addrController.getAllDepartments);
 
 // GET => /departments/id
-router.get('/:id', addrController.getAddress);
+router.get('/:id', authorize,addrController.getAddress);
 
 // POST => /departments
-router.post('/',validate(postAddressBodySchema), addrController.postAddress);
+router.post('/',authorize,validate(postAddressBodySchema), addrController.postAddress);
 
 // PUT => /departments/id
-router.put('/:id', validate(editAddressBodySchema), addrController.editAddress);
+router.put('/:id', authorize,validate(editAddressBodySchema), addrController.editAddress);
 
 // DELETE => /departments/id
-router.delete('/:id', addrController.deleteAddress);
+router.delete('/:id', authorize,addrController.deleteAddress);
 
 module.exports = router;

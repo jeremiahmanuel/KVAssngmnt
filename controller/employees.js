@@ -143,7 +143,7 @@ exports.deleteEmployee = (req, resp, next) => {
 
 exports.getEmployeeRoles = (req, resp, next) => {
     const empId = req.params.id;
-    EmpDept.findAll({
+    EmpRole.findAll({
         attributes: ['roleId'],
         where: { empId: empId }
     })
@@ -164,12 +164,12 @@ exports.postEmployeeRole = (req, resp, next) => {
     const empId = req.params.id;
     const roleId = req.body.roleId;
 
-    EmpDept.create({
+    EmpRole.create({
         empId: empId,
         roleId: roleId
-    }).then(employeeDepartment => {
+    }).then(employeeRoles => {
         resp.status(200).json({
-            message: `Role ${employeeDepartment.deptId} added for employee ${employeeDepartment.empId}`
+            message: '`Role ${employeeRoles.empId} added for employee ${employeeRoles.roleId`'
         });
     }).catch(err => {
         console.log(err);
@@ -178,3 +178,26 @@ exports.postEmployeeRole = (req, resp, next) => {
         });
     });
 };
+
+exports.deleteEmployeeRole = (req,resp,next) => {
+  const empId = req.body.empId;
+  const roleId = req.body.roleId;
+
+  EmpRole.findAll({
+    where:{empId : empId,roleId:roleId}
+  })
+  .then(role => {
+      console.log("here")
+      return role[0].destroy();
+  })
+  .then(()=> {
+    resp.status(200).json({
+        message: 'roles deleted successfully'
+      })
+  })
+  .catch(err =>{
+    resp.status(404).json({
+      message:'roles couldnt be deleted'
+    })
+  })
+}

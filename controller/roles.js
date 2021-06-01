@@ -37,7 +37,7 @@ exports.getRole =  (req, resp, next) => {
 exports.postRole = (req, resp, next) => {
   const name = req.body.name;
 
-  Roles.create({
+  Role.create({
     name:name
   })
     .then(role => {
@@ -73,10 +73,9 @@ exports.editRole =(req, resp, next) =>{
 
 exports.deleteRole = (req, resp , next) => {
   id = req.params.id;
-
   Role.findByPk(id)
   .then(role => {
-    return department.destroy();
+    return role.destroy();
   })
   .then(() => {
     resp.status(200).json({
